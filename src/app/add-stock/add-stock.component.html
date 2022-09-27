@@ -1,0 +1,15 @@
+<div class="div-panel">
+  <p>Enter the symbol of a stock to track (i.e. AAPL, TSLA, GOOGL)</p>
+  <form [formGroup]="addStockForm" (ngSubmit)="addStock()">
+    <div>
+      <input type="text" [(ngModel)]="stockInput" formControlName="stockInput" maxlength="5">
+      <button type="submit" id="trackBtn" class="button" [disabled]="!addStockForm.valid">Track Stock</button>
+    </div>
+    <div *ngIf="checkError('stockInput', 'required')" class="error">
+      Symbol is required.
+    </div>
+    <div *ngIf="checkError('stockInput', 'pattern')" class="error">
+      Symbol must be 1 to 5 letters, no special symbols or numbers allowed.
+    </div>
+  </form>
+</div>
