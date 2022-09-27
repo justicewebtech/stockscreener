@@ -5,7 +5,7 @@
       ({{quote.company.displaySymbol | uppercase}})
     </h2>
     <div class="float-right">
-      <a href="#" (click)="deleteItem(quote.company.displaySymbol)" id="remove{{quote.company.displaySymbol}}">x</a>
+      <a class="clickable" (click)="deleteItem(quote.company.displaySymbol)" id="remove{{quote.company.displaySymbol}}">x</a>
     </div>
     <div style="clear:both"></div>
   </div>

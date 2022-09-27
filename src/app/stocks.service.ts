@@ -18,10 +18,10 @@ export class StocksService {
     private http: HttpClient,
     private localStorageService: LocalStorageService
     ) {
-      this.getAllQuotes().subscribe(quotes => {
-        this.allQuotes$.next(quotes);
-        this.quotes = quotes;
-      });
+
+      this.allQuotes$.subscribe(quotes => this.quotes = quotes);
+      this.getAllQuotes().subscribe(quotes => this.allQuotes$.next(quotes));
+
      }
 
   getQuote(stock: string): Observable<StockQuote> {
