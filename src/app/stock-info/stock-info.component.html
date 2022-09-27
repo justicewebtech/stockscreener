@@ -35,6 +35,6 @@
 
   <div style="clear:both"></div>
   <div>
-    <a href="#" (click)="sentiment(quote.company.displaySymbol)" id="">Go to social sentiment details >></a>
+    <a [routerLink]="['/sentiment', quote.company.displaySymbol]" id="">Go to social sentiment details >></a>
   </div>
 </div>

@@ -8,13 +8,15 @@ import { StockInfoComponent } from './stock-info/stock-info.component';
 import { StockSentimentComponent } from './stock-sentiment/stock-sentiment.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { StockScreenerComponent } from './stock-screener/stock-screener.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AddStockComponent,
     StockInfoComponent,
-    StockSentimentComponent
+    StockSentimentComponent,
+    StockScreenerComponent
   ],
   imports: [
     BrowserModule,

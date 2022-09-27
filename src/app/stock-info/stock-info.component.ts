@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { LocalStorageService } from '../local-storage.service';
-import { QuoteInfo, StockQuote } from '../models';
+import { StockQuote } from '../models';
 import { StocksService } from '../stocks.service';
 
 @Component({
@@ -23,11 +23,15 @@ export class StockInfoComponent implements OnInit {
   }
 
   deleteItem(symbol:string): void{
+
+    // deep copy
     let quotes: StockQuote[] = JSON.parse(JSON.stringify(this.stocksService.quotes));
+
+    // find and delete item
     const quoteIdx = quotes.findIndex(quote => quote.company.symbol.toLocaleLowerCase() === symbol.toLocaleLowerCase());
     quotes.splice(quoteIdx,1);
 
-    // update local storage - array of symbols (string[])
+    // update local storage - array of stock symbols (string[])
     this.localStorageService.saveStocks(quotes.map(quote => quote.company.symbol));
 
     // update behavior subject - StockQuote[]
