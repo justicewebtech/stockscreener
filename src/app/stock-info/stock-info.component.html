@@ -5,7 +5,7 @@
       ({{quote.company.displaySymbol | uppercase}})
     </h2>
     <div class="float-right">
-      x
+      <a href="#" (click)="deleteItem(quote.company.displaySymbol)" id="remove{{quote.company.displaySymbol}}">x</a>
     </div>
     <div style="clear:both"></div>
   </div>
@@ -34,4 +34,7 @@
   </div>
 
   <div style="clear:both"></div>
+  <div>
+    <a href="#" (click)="sentiment(quote.company.displaySymbol)" id="">Go to social sentiment details >></a>
+  </div>
 </div>
