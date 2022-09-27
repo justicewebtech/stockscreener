@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient} from '@angular/common/http';
-import { combineLatest, map, Observable } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, Observable } from 'rxjs';
 import { LocalStorageService } from './local-storage.service';
 import { CompanyInfo, QuoteInfo, StockQuote } from './models';
 
@@ -11,10 +11,18 @@ export class StocksService {
 
   apiKey:string = "bu4f8kn48v6uehqi3cqg";
 
+  allQuotes$ = new BehaviorSubject<StockQuote[]>([]);
+  quotes:StockQuote[] = [];
+
   constructor(
     private http: HttpClient,
     private localStorageService: LocalStorageService
-    ) { }
+    ) {
+      this.getAllQuotes().subscribe(quotes => {
+        this.allQuotes$.next(quotes);
+        this.quotes = quotes;
+      });
+     }
 
   getQuote(stock: string): Observable<StockQuote> {
     let headers = new HttpHeaders();
