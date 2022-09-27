@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { LocalStorageService } from '../local-storage.service';
-import { StockQuote } from '../models';
-import { StocksService } from '../stocks.service';
+import { LocalStorageService } from '../../local-storage.service';
+import { StockQuote } from '../../models';
+import { StocksService } from '../../stocks.service';
 
 @Component({
   selector: 'app-stock-info',
