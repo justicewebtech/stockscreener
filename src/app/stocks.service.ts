@@ -35,7 +35,8 @@ export class StocksService {
     let quoteData$ = this.http.get<QuoteInfo>(quoteUrl,httpOptions);
     let companyName$ = this.http.get<{'count': number, 'result': CompanyInfo[]}>(nameUrl,httpOptions)
       .pipe(
-        map(x => x.result[0]) //.find(({displaySymbol}) => displaySymbol === stock))
+        map(x => x.result[0])
+        //.find(({displaySymbol}) => displaySymbol === stock)) - returns CompanyInfo | undefined - so we assume we can use first array element in return instead
       );
 
     return combineLatest([companyName$, quoteData$])

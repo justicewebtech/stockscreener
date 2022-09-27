@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
 import { LocalStorageService } from '../local-storage.service';
 import { StocksService } from '../stocks.service';
 
