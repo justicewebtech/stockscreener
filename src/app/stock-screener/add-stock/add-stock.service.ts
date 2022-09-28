@@ -13,6 +13,7 @@ export class AddStockService {
     ) { }
 
   addStock(stockInput: string): void{
+    stockInput = stockInput.toUpperCase();
     // update stocks array
     let stocks:string[] = this.localStorageService.getStocks();
     stocks.push(stockInput);
