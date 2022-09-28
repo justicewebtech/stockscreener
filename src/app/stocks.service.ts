@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient} from '@angular/common/http';
-import { BehaviorSubject, combineLatest, map, Observable, of, tap } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, Observable } from 'rxjs';
 import { LocalStorageService } from './local-storage.service';
 import { CompanyInfo, QuoteInfo, StockQuote } from './models';
 
@@ -26,9 +26,6 @@ export class StocksService {
       });
 
      }
-
-
-  //TODO: combine headers into one block rather than rewrite all the time
 
   getQuote(stock: string): Observable<StockQuote> {
     let headers = new HttpHeaders();

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AppComponent } from './app.component'
 import { StockScreenerComponent } from './stock-screener/stock-screener.component';
 import { StockSentimentComponent } from './stock-sentiment/stock-sentiment.component'
 

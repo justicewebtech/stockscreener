@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { combineLatest, map, mergeMap, Observable, of, shareReplay } from 'rxjs';
+import { combineLatest, map, mergeMap, Observable, shareReplay } from 'rxjs';
 import { CompanySentiment } from '../models';
 import { StocksService } from '../stocks.service';
 
@@ -12,7 +12,6 @@ import { StocksService } from '../stocks.service';
 export class StockSentimentComponent implements OnInit {
 
   sentiment$: Observable<CompanySentiment>;
-  // sentiment$ = new BehaviorSubject<any>(null);
 
   constructor(
     private stocksService: StocksService,
@@ -32,14 +31,7 @@ export class StockSentimentComponent implements OnInit {
       )
      }
 
-  ngOnInit(): void {
-
-    //TODO: Finish implementing this logic to display information in sentiment component
-
-
-      this.sentiment$.subscribe(x => console.log(x))
-
-  }
+  ngOnInit(): void { }
 
   toMonthName(monthNumber: number): string {
     const date = new Date();
