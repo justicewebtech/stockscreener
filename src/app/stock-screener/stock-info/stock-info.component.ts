@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, tap } from 'rxjs';
 import { LocalStorageService } from '../../local-storage.service';
 import { StockQuote } from '../../models';
 import { StocksService } from '../../stocks.service';
@@ -12,6 +12,7 @@ import { StocksService } from '../../stocks.service';
 export class StockInfoComponent implements OnInit {
 
   allQuotes$ = new BehaviorSubject<StockQuote[]>([]);
+  loading$ = new BehaviorSubject<boolean>(true);
 
   constructor(
     private stocksService:StocksService,
@@ -20,6 +21,7 @@ export class StockInfoComponent implements OnInit {
 
   ngOnInit(): void {
     this.allQuotes$ = this.stocksService.allQuotes$;
+    this.loading$ = this.stocksService.loading$;
   }
 
   deleteItem(symbol:string): void{
@@ -36,10 +38,6 @@ export class StockInfoComponent implements OnInit {
 
     // update behavior subject - StockQuote[]
     this.stocksService.allQuotes$.next(quotes);
-  }
-
-  sentiment(symbol: string): void {
-
   }
 
 }

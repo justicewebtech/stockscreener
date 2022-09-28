@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient} from '@angular/common/http';
-import { BehaviorSubject, combineLatest, map, Observable, of } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, Observable, of, tap } from 'rxjs';
 import { LocalStorageService } from './local-storage.service';
 import { CompanyInfo, QuoteInfo, StockQuote } from './models';
 
@@ -10,7 +10,7 @@ import { CompanyInfo, QuoteInfo, StockQuote } from './models';
 export class StocksService {
 
   apiKey:string = "bu4f8kn48v6uehqi3cqg";
-
+  loading$ = new BehaviorSubject<boolean>(true);
   allQuotes$ = new BehaviorSubject<StockQuote[]>([]);
   quotes:StockQuote[] = [];
 
@@ -20,7 +20,10 @@ export class StocksService {
     ) {
 
       this.allQuotes$.subscribe(quotes => this.quotes = quotes);
-      this.getAllQuotes().subscribe(quotes => this.allQuotes$.next(quotes));
+      this.getAllQuotes().subscribe(quotes => {
+        this.loading$.next(false);
+        this.allQuotes$.next(quotes);
+      });
 
      }
 
@@ -59,13 +62,16 @@ export class StocksService {
     return this.http.get<{'count': number, 'result': CompanyInfo[]}>(nameUrl,httpOptions)
       .pipe(
         map(x => x.result[0])
-        //.find(({displaySymbol}) => displaySymbol === stock)) - returns CompanyInfo | undefined - so we assume we can use first array element in return instead
+        //.find(({displaySymbol}) => displaySymbol === stock)) - returns CompanyInfo | undefined - assume we can use first array element in return instead
       );
 
   }
 
   getAllQuotes(): Observable<StockQuote[]> {
     const stocks: string[] = this.localStorageService.getStocks();
+    if(!stocks.length){
+      this.loading$.next(false);
+    }
     let requests: Observable<StockQuote>[] = [];
     stocks.forEach(stock => requests.push(this.getQuote(stock)));
     return combineLatest(requests);

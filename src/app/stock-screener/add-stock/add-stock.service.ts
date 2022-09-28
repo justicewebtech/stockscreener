@@ -20,10 +20,15 @@ export class AddStockService {
     // update local storage
     this.localStorageService.saveStocks(stocks);
 
+    this.stocksService.loading$.next(true);
     // update behaviorsubject with response for new stock which updates view for single item added
-    this.stocksService.getQuote(stockInput).subscribe(result => {
-      this.stocksService.quotes.push(result);
-      this.stocksService.allQuotes$.next(this.stocksService.quotes);
-    });
+    this.stocksService.getQuote(stockInput).subscribe({
+      next: result => {
+        this.stocksService.quotes.push(result);
+        this.stocksService.allQuotes$.next(this.stocksService.quotes);
+      },
+      error: err => console.log(err),
+      complete: () => this.stocksService.loading$.next(false)
+  });
   }
 }

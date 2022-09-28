@@ -1,40 +1,46 @@
-<div class="div-panel" *ngFor="let quote of allQuotes$ | async">
-  <div>
-    <h2 class="float-left">
-      {{quote.company.description | titlecase}}
-      ({{quote.company.displaySymbol | uppercase}})
-    </h2>
-    <div class="float-right">
-      <a class="clickable" (click)="deleteItem(quote.company.displaySymbol)" id="remove{{quote.company.displaySymbol}}">x</a>
-    </div>
-    <div style="clear:both"></div>
-  </div>
-  <div class="float-left">
-    <div class="float-left">
-      Change today: {{quote.quote.dp/100 | percent:'0.0-2'}}
+<div *ngIf="(allQuotes$ | async)">
+  <div class="div-panel" *ngFor="let quote of allQuotes$ | async">
+    <div>
+      <h2 class="float-left">
+        {{quote.company.description | titlecase}}
+        ({{quote.company.displaySymbol | uppercase}})
+      </h2>
+      <div class="float-right">
+        <a class="clickable" (click)="deleteItem(quote.company.displaySymbol)" id="remove{{quote.company.displaySymbol}}">x</a>
+      </div>
+      <div style="clear:both"></div>
     </div>
     <div class="float-left">
-      Opening price: {{quote.quote.o | currency:'USD'}}
-    </div>
-    <div style="clear:both"></div>
-    <div class="float-left">
-      Current price: {{quote.quote.c | currency:'USD'}}
-    </div>
-    <div class="float-left">
-      High price: {{quote.quote.h | currency:'USD'}}
-    </div>
-    <div style="clear:both"></div>
+      <div class="float-left">
+        Change today: {{quote.quote.dp/100 | percent:'0.0-2'}}
+      </div>
+      <div class="float-left">
+        Opening price: {{quote.quote.o | currency:'USD'}}
+      </div>
+      <div style="clear:both"></div>
+      <div class="float-left">
+        Current price: {{quote.quote.c | currency:'USD'}}
+      </div>
+      <div class="float-left">
+        High price: {{quote.quote.h | currency:'USD'}}
+      </div>
+      <div style="clear:both"></div>
 
-  </div>
-  <div class="float-left up-arrow" *ngIf="quote.quote.dp >= 0">
-    🡅
-  </div>
-  <div class="float-left down-arrow" *ngIf="quote.quote.dp < 0">
-    🡇
+    </div>
+    <div class="float-left up-arrow" *ngIf="quote.quote.dp >= 0">
+      🡅
+    </div>
+    <div class="float-left down-arrow" *ngIf="quote.quote.dp < 0">
+      🡇
+    </div>
+
+    <div style="clear:both"></div>
+    <div>
+      <a [routerLink]="['/sentiment', quote.company.displaySymbol]" id="">Go to social sentiment details >></a>
+    </div>
   </div>
 
-  <div style="clear:both"></div>
-  <div>
-    <a [routerLink]="['/sentiment', quote.company.displaySymbol]" id="">Go to social sentiment details >></a>
-  </div>
+</div>
+<div *ngIf="(loading$ | async)">
+  Loading...
 </div>
