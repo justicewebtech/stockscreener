@@ -23,7 +23,7 @@
     <div style="clear:both"></div>
   </div>
   <div>
-    <a [routerLink]="['/home']" id=""><< Back to list of stocks</a>
+    <a [routerLink]="['/home']" id="backBtn"><< Back to list of stocks</a>
   </div>
 </div>
 <div *ngIf="!(sentiment$ | async)">Loading...</div>
