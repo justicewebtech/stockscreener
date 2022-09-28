@@ -24,13 +24,15 @@ export class StocksService {
 
      }
 
+
+  //TODO: combine headers into one block rather than rewrite all the time
+
   getQuote(stock: string): Observable<StockQuote> {
     let headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json; charset=UTF-8');
     headers.append('Access-Control-Allow-Origin', '*');
     let httpOptions = {headers: headers};
     const quoteUrl = `https://finnhub.io/api/v1/quote?symbol=${stock}&token=${this.apiKey}`;
-    const nameUrl = `https://finnhub.io/api/v1/search?q=${stock}&token=${this.apiKey}`;
 
     let quoteData$ = this.http.get<QuoteInfo>(quoteUrl,httpOptions);
     let companyName$ = this.getCompanyInfo(stock);

@@ -1,9 +1,29 @@
-<div class="div-panel">
-  <div>
-    <h2 class="float-left">
-      {{quote.company.description | titlecase}}
-      ({{quote.company.displaySymbol | uppercase}})
-    </h2>
+<div *ngIf="(sentiment$ | async)">
+  <div class="div-panel">
+    <div>
+      <h2 class="float-left">
+        {{(sentiment$ | async)?.company?.description | titlecase}}
+        ({{(sentiment$ | async)?.company?.displaySymbol | uppercase}})
+      </h2>
+    </div>
+    <div style="clear:both"></div>
+    <div>
+      <div *ngFor="let sentiment of (sentiment$ | async)?.sentiment?.data" class="float-left">
+        <p>{{toMonthName(sentiment.month) | uppercase}}</p>
+        <p>Change: {{sentiment.change | number}}</p>
+        <p>MSPR: {{sentiment.mspr | number:'1.0-2'}}</p>
+        <div class="float-left up-arrow" *ngIf="sentiment.change >= 0">
+          🡅
+        </div>
+        <div class="float-left down-arrow" *ngIf="sentiment.change < 0">
+          🡇
+        </div>
+      </div>
+    </div>
+    <div style="clear:both"></div>
   </div>
-  <div style="clear:both"></div>
+  <div>
+    <a [routerLink]="['/home']" id=""><< Back to list of stocks</a>
+  </div>
 </div>
+<div *ngIf="!(sentiment$ | async)">Loading...</div>

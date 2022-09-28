@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { combineLatest, mergeMap, Observable, of } from 'rxjs';
-import { StockQuote } from '../models';
+import { combineLatest, map, mergeMap, Observable, of, shareReplay } from 'rxjs';
+import { CompanySentiment } from '../models';
 import { StocksService } from '../stocks.service';
 
 @Component({
@@ -11,44 +11,43 @@ import { StocksService } from '../stocks.service';
 })
 export class StockSentimentComponent implements OnInit {
 
-  sentiment$: Observable<any> = of();
-  defaultQuote: StockQuote = {
-    company:{
-      description: "",
-      displaySymbol: "",
-      symbol: "",
-      type: ""
-    },
-    quote:{
-      "c": 0,
-      "d": 0,
-      "dp": 0,
-      "h": 0,
-      "l": 0,
-      "o": 0,
-      "pc": 0,
-      "t": 0,
-    }
-  };
-  quote: StockQuote = Object.assign(this.defaultQuote);
+  sentiment$: Observable<CompanySentiment>;
+  // sentiment$ = new BehaviorSubject<any>(null);
 
   constructor(
     private stocksService: StocksService,
-    private route: ActivatedRoute) { }
-
-  ngOnInit(): void {
-
-    //TODO: Finish implementing this logic to display information in sentiment component
-    this.route.paramMap
+    private route: ActivatedRoute) {
+      this.sentiment$ = this.route.paramMap
       .pipe(
         mergeMap((params: ParamMap) => {
           let symbol = params.get('symbol') ?? "";
           let sentiment$ = this.stocksService.getSentiment(symbol);
           let companyInfo$ = this.stocksService.getCompanyInfo(symbol);
           return combineLatest([companyInfo$, sentiment$]);
-        })
-      ).subscribe(x => console.log(x))
+        }),
+        map(results => {
+          return {company: results[0], sentiment: results[1]}
+        }),
+        shareReplay(1)
+      )
+     }
 
+  ngOnInit(): void {
+
+    //TODO: Finish implementing this logic to display information in sentiment component
+
+
+      this.sentiment$.subscribe(x => console.log(x))
+
+  }
+
+  toMonthName(monthNumber: number): string {
+    const date = new Date();
+    date.setMonth(monthNumber - 1);
+
+    return date.toLocaleString('en-US', {
+      month: 'long',
+    });
   }
 
 }
