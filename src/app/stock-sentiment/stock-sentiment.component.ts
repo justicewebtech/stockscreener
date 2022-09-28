@@ -17,18 +17,18 @@ export class StockSentimentComponent implements OnInit {
     private stocksService: StocksService,
     private route: ActivatedRoute) {
       this.sentiment$ = this.route.paramMap
-      .pipe(
-        mergeMap((params: ParamMap) => {
-          let symbol = params.get('symbol') ?? "";
-          let sentiment$ = this.stocksService.getSentiment(symbol);
-          let companyInfo$ = this.stocksService.getCompanyInfo(symbol);
-          return combineLatest([companyInfo$, sentiment$]);
-        }),
-        map(results => {
-          return {company: results[0], sentiment: results[1]}
-        }),
-        shareReplay(1)
-      )
+        .pipe(
+          mergeMap((params: ParamMap) => {
+            let symbol = params.get('symbol') ?? "";
+            let sentiment$ = this.stocksService.getSentiment(symbol);
+            let companyInfo$ = this.stocksService.getCompanyInfo(symbol);
+            return combineLatest([companyInfo$, sentiment$]);
+          }),
+          map(results => {
+            return {company: results[0], sentiment: results[1]}
+          }),
+          shareReplay(1)
+        )
      }
 
   ngOnInit(): void { }
