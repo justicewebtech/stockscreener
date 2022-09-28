@@ -5,10 +5,10 @@
       <input type="text" [(ngModel)]="stockInput" formControlName="stockInput" maxlength="5">
       <button type="submit" id="trackBtn" class="button" [disabled]="!addStockForm.valid">Track Stock</button>
     </div>
-    <div *ngIf="checkError('stockInput', 'required')" class="error">
+    <div *ngIf="checkError('required')" class="error">
       Symbol is required.
     </div>
-    <div *ngIf="checkError('stockInput', 'pattern')" class="error">
+    <div *ngIf="checkError('pattern')" class="error">
       Symbol must be 1 to 5 letters, no special symbols or numbers allowed.
     </div>
   </form>

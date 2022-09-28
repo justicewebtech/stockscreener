@@ -25,8 +25,8 @@ export class AddStockComponent implements OnInit {
     this.addStockForm.reset();
   }
 
-  checkError(controlName: string, errorName: string): boolean{
-    const control:AbstractControl = this.addStockForm.controls[controlName];
+  checkError(errorName: string): boolean{
+    const control = this.addStockForm.controls['stockInput'];
     return control.hasError(errorName) && (control.dirty || control.touched);
   }
 
