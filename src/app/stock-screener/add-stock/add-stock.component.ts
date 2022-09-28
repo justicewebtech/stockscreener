@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AddStockService } from './add-stock.service';
 
 @Component({
@@ -26,7 +26,7 @@ export class AddStockComponent implements OnInit {
   }
 
   checkError(controlName: string, errorName: string): boolean{
-    const control = this.addStockForm.controls[controlName];
+    const control:AbstractControl = this.addStockForm.controls[controlName];
     return control.hasError(errorName) && (control.dirty || control.touched);
   }
 
